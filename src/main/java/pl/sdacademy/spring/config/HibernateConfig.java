@@ -1,5 +1,6 @@
 package pl.sdacademy.spring.config;
 
+
 import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -23,7 +24,7 @@ public class HibernateConfig {
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
-        sessionFactory.setPackagesToScan("pl.sdacademy.spring");
+        sessionFactory.setPackagesToScan("pl.sdacademy.spring.config");
         sessionFactory.setHibernateProperties(hibernateProperties());
 
         return sessionFactory;
@@ -32,10 +33,10 @@ public class HibernateConfig {
     @Bean
     public DataSource dataSource() {
         BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setDriverClassName("org.h2.Driver");
-        dataSource.setUrl("jdbc:h2:mem:db;DB_CLOSE_DELAY=-1");
-        dataSource.setUsername("sa");
-        dataSource.setPassword("sa");
+        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/users?serverTimezone=UTC");
+        dataSource.setUsername("root");
+        dataSource.setPassword("kubistycznykot");
 
         return dataSource;
     }
@@ -53,7 +54,7 @@ public class HibernateConfig {
         hibernateProperties.setProperty(
                 "hibernate.hbm2ddl.auto", "create-drop");
         hibernateProperties.setProperty(
-                "hibernate.dialect", "org.hibernate.dialect.H2Dialect");
+                "hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect");
 
         return hibernateProperties;
     }
